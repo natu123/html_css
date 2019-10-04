@@ -1,0 +1,13 @@
+.table-of-contents {
+    padding: 15px 10px 15px 35px;  /* 枠内の余白(上右下左) */
+    font-size: 100%;  /* 文字サイズ */
+    border:dotted 1px #777;  /* 線の種類と色 */
+    background:#f7f7f7;  /* 背景 */
+    color: rgb(36, 53, 39);
+}
+.table-of-contents:before {
+    content: "目次";
+    font-size: 130%;
+    font-weight:bold;   /* 文字の太さ　通常はnormal */    
+    color:#000;  /* 文字の色 */
+}

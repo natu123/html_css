@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="TOsheet.css">
+        <title>テトリス 横移動最適化</title>
+        <!-- <link rel="icon" type="image/x-icon" href="./site-logo.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="./site-logo.png"> -->
+        <!-- <link rel="shortcut icon" href="Images/site-logo.ico"> -->
+        <link rel="shortcut icon" href="https://f.uploader.xzy.pw/eu-prd/upload/20191004112156_6c50443657.ico" type="Images/site-logo.ico" sizes="32x32">
+    </head>
+    <body class="main">
+        <header>テトリス 横移動最適化</header>
+        <p class="hExp">テトリスにおける 横移動を最短にする方法。
+            <a href="https://harddrop.com/wiki/0G_60_Hz_SRS_Movement_Finesse">Movement Finesse</a>
+        </p>
+<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 目次 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+        <div class="table-of-contents">
+            <ul>
+                <li><a href="#s">S ミノ</a></li>
+                <li><a href="#z">Z ミノ</a></li>
+                <li><a href="#j">J ミノ</a></li>
+                <li><a href="#l">L ミノ</a></li>
+                <li><a href="#t">T ミノ</a></li>
+                <li><a href="#o">O ミノ</a></li>
+                <li><a href="#i">I ミノ</a></li>
+                <!-- ...工事中 -->
+            </ul>
+        </div>
+<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ S ミノ ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+        <article class="artwidth">
+            <div class="maintitle">
+                <a id="s"> S ミノ </a>
+            </div>
+            <div class="vh">
+                横置き
+            </div>
+            <img src="Images/Shor.png" alt="S horizon" class="MinoSize1">
+            <p>
+                <ul class="pad">
+                    <li>1列目: L長押し</li>
+                    <li>2列目: L L</li>
+                    <li>3列目: L</li>
+                    <li>4列目: none</li>
+                    <li>5列目: R</li>
+                    <li>6列目: R R</li>
+                    <li>7列目: R長押し → L</li>
+                    <li>8列目: R長押し</li>
+                </ul>
+            </p>
+            <div class="vh">
+                縦置き
+            </div>
+            <img src="Images/Sver.png" alt="S vertical" class="MinoSize2">
+            <p>
+                <ul class="pad">
+                    <!-- B = 左回転, A = 右回転 -->
+                    <li>1列目: L長押し → 左回転</li>
+                    <li>2列目: L L → 左回転</li>
+                    <li>3列目: L → 左回転</li>
+                    <li>4列目: 左回転</li>
+                    <li>5列目: 右回転</li>
+                    <li>6列目: R → 右回転</li>
+                    <li>7列目: R R → 右回転</li>
+                    <li>8列目: R長押し → 左回転</li>
+                    <li>9列目: R長押し → 右回転</li>
+                </ul>
+            </p>
+        </article>
+<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ Z ミノ ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■-->
+        <article class="artwidth">
+            <div class="maintitle">
+                <a id="z"> Z ミノ </a>
+            </div>
+            <div class="vh">
+                横置き
+            </div>
+            <img src="Images/Zhor.png" alt="Z horizon" class="MinoSize1">
+            <p>
+                <ul class="pad">
+                    <li>1列目: L長押し</li>
+                    <li>2列目: L L</li>
+                    <li>3列目: L</li>
+                    <li>4列目: none</li>
+                    <li>5列目: R</li>
+                    <li>6列目: R R</li>
+                    <li>7列目: R長押し → L</li>
+                    <li>8列目: R長押し</li>
+                </ul>
+            </p>
+            <div class="vh">
+                縦置き
+            </div>
+            <img src="Images/Zver.png" alt="Z vertical" class="MinoSize2">
+            <p>
+                <ul class="pad">
+                <!-- B = 左回転, A = 右回転 -->
+                    <li>1列目: L長押し → 左回転</li>
+                    <li>2列目: L L → 左回転</li>
+                    <li>3列目: L → 左回転</li>
+                    <li>4列目: 左回転</li>
+                    <li>5列目: 右回転</li>
+                    <li>6列目: R → 右回転</li>
+                    <li>7列目: R R → 右回転</li>
+                    <li>8列目: R長押し → 左回転</li>
+                    <li>9列目: R長押し → 右回転</li>
+                </ul>
+            </p>
+        </article>
+<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ J ミノ ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+        <article class="artwidth">
+            <div class="maintitle">
+                <a id="j"> J ミノ </a>
+            </div>
+            <div class="vh">
+                上下置き
+            </div>
+            <img src="Images/Jup.png" alt="J up" class="MinoSize1">
+            <img src="Images/Jdown.png" alt="J down" class="MinoSize1">
+            <p>
+                <ul class="pad">
+                    <li>1列目: L長押し</li>
+                    <li>2列目: L L</li>
+                    <li>3列目: L</li>
+                    <li>4列目: none</li>
+                    <li>5列目: R</li>
+                    <li>6列目: R R</li>
+                    <li>7列目: R長押し → L</li>
+                    <li>8列目: R長押し</li>
+                </ul>
+            </p>
+            <div class="vh">
+                右置き
+            </div>
+            <img src="Images/Jright.png" alt="J right" class="MinoSize2">
+            <p>
+                <ul class="pad">
+                    <!-- B = 左回転, A = 右回転 -->
+                    <li>1列目: 右回転 → L長押し</li>
+                    <li>2列目: L長押し → 右回転</li>
+                    <li>3列目: 右回転 → L L</li>
+                    <li>4列目: 右回転 → L</li>
+                    <li>5列目: 右回転</li>
+                    <li>6列目: 右回転 → R</li>
+                    <li>7列目: 右回転 → R R</li>
+                    <li>8列目: 右回転 → R長押し → L</li>
+                    <li>9列目: 右回転 → R長押し</li>
+                </ul>
+            </p>
+            <div class="vh">
+                    左置き
+                </div>
+                <img src="Images/Jleft.png" alt="J left" class="MinoSize2">
+                <p>
+                    <ul class="pad">
+                        <!-- B = 左回転, A = 右回転 -->
+                        <li>1列目: 左回転 → L長押し</li>
+                        <li>2列目: 左回転 → L L</li>
+                        <li>3列目: 左回転 → L</li>
+                        <li>4列目: 左回転</li>
+                        <li>5列目: 左回転 → R</li>
+                        <li>6列目: 左回転 → R R</li>
+                        <li>7列目: R長押し → 左回転 → L</li>
+                        <li>8列目: R長押し → 左回転</li>
+                        <li>9列目: 左回転 → R長押し</li>
+                    </ul>
+                </p>
+        </article>
+<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ L ミノ ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+        <article class="artwidth">
+            <div class="maintitle">
+                <a id="l"> L ミノ </a>
+            </div>
+            <div class="vh">
+                上下置き
+            </div>
+            <img src="Images/Lup.png" alt="L up" class="MinoSize1">
+            <img src="Images/Ldown.png" alt="L down" class="MinoSize1">
+            <p>
+                <ul class="pad">
+                    <li>1列目: L長押し</li>
+                    <li>2列目: L L</li>
+                    <li>3列目: L</li>
+                    <li>4列目: none</li>
+                    <li>5列目: R</li>
+                    <li>6列目: R R</li>
+                    <li>7列目: R長押し → L</li>
+                    <li>8列目: R長押し</li>
+                </ul>
+            </p>
+            <div class="vh">
+                右置き
+            </div>
+            <img src="Images/Lright.png" alt="L right" class="MinoSize2">
+            <p>
+                <ul class="pad">
+                    <!-- B = 左回転, A = 右回転 -->
+                    <li>1列目: 右回転 → L長押し</li>
+                    <li>2列目: L長押し → 右回転</li>
+                    <li>3列目: 右回転 → L L</li>
+                    <li>4列目: 右回転 → L</li>
+                    <li>5列目: 右回転</li>
+                    <li>6列目: 右回転 → R</li>
+                    <li>7列目: 右回転 → R R</li>
+                    <li>8列目: 右回転 → R長押し → L</li>
+                    <li>9列目: 右回転 → R長押し</li>
+                </ul>
+            </p>
+            <div class="vh">
+                    左置き
+                </div>
+                <img src="Images/Lleft.png" alt="L left" class="MinoSize2">
+                <p>
+                    <ul class="pad">
+                        <!-- B = 左回転, A = 右回転 -->
+                        <li>1列目: 左回転 → L長押し</li>
+                        <li>2列目: 左回転 → L L</li>
+                        <li>3列目: 左回転 → L</li>
+                        <li>4列目: 左回転</li>
+                        <li>5列目: 左回転 → R</li>
+                        <li>6列目: 左回転 → R R</li>
+                        <li>7列目: R長押し → 左回転 → L</li>
+                        <li>8列目: R長押し → 左回転</li>
+                        <li>9列目: 左回転 → R長押し</li>
+                    </ul>
+                </p>
+        </article>
+<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ T ミノ ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■-->
+        <article class="artwidth">
+            <div class="maintitle">
+                <a id="t"> T ミノ </a>
+            </div>
+            <div class="vh">
+                上下置き
+            </div>
+            <img src="Images/Tup.png" alt="T up" class="MinoSize1">
+            <img src="Images/Tdown.png" alt="T down" class="MinoSize1">
+            <p>
+                <ul class="pad">
+                    <li>1列目: L長押し</li>
+                    <li>2列目: L L</li>
+                    <li>3列目: L</li>
+                    <li>4列目: none</li>
+                    <li>5列目: R</li>
+                    <li>6列目: R R</li>
+                    <li>7列目: R長押し → L</li>
+                    <li>8列目: R長押し</li>
+                </ul>
+            </p>
+            <div class="vh">
+                右置き
+            </div>
+            <img src="Images/Tright.png" alt="T right" class="MinoSize2">
+            <p>
+                <ul class="pad">
+                    <!-- B = 左回転, A = 右回転 -->
+                    <li>1列目: 右回転 → L長押し</li>
+                    <li>2列目: L長押し → 右回転</li>
+                    <li>3列目: 右回転 → L L</li>
+                    <li>4列目: 右回転 → L</li>
+                    <li>5列目: 右回転</li>
+                    <li>6列目: 右回転 → R</li>
+                    <li>7列目: 右回転 → R R</li>
+                    <li>8列目: 右回転 → R長押し → L</li>
+                    <li>9列目: 右回転 → R長押し</li>
+                </ul>
+            </p>
+            <div class="vh">
+                左置き
+            </div>
+            <img src="Images/Tleft.png" alt="T left" class="MinoSize2">
+            <p>
+                <ul class="pad">
+                    <!-- B = 左回転, A = 右回転 -->
+                    <li>1列目: 左回転 → L長押し</li>
+                    <li>2列目: 左回転 → L L</li>
+                    <li>3列目: 左回転 → L</li>
+                    <li>4列目: 左回転</li>
+                    <li>5列目: 左回転 → R</li>
+                    <li>6列目: 左回転 → R R</li>
+                    <li>7列目: R長押し → 左回転 → L</li>
+                    <li>8列目: R長押し → 左回転</li>
+                    <li>9列目: 左回転 → R長押し</li>
+                </ul>
+            </p>
+        </article>
+<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ O ミノ ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■-->
+        <article class="artwidth">
+            <div class="maintitle">
+                <a id="o"> O ミノ </a>
+            </div>
+            <img src="Images/O.png" alt="O" class="MinoSize3">
+            <p>
+                <ul class="pad">
+                    <li>1列目: L長押し</li>
+                    <li>2列目: L長押し → R</li>
+                    <li>3列目: L L</li>
+                    <li>4列目: L</li>
+                    <li>5列目: none</li>
+                    <li>6列目: R</li>
+                    <li>7列目: R R</li>
+                    <li>8列目: R長押し → L</li>
+                    <li>9列目: R長押し</li>
+                </ul>
+            </p>
+        </article>
+<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ I ミノ ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+        <article class="artwidth">
+            <div class="maintitle">
+                <a id="i"> I ミノ </a>
+            </div>
+            <div class="vh">
+                横置き
+            </div>
+            <img src="Images/Ihor.png" alt="I horizon" class="MinoSize_Ihor">
+            <p>
+                <ul class="pad">
+                    <li>1列目: L長押し</li>
+                    <li>2列目: L L</li>
+                    <li>3列目: L</li>
+                    <li>4列目: none</li>
+                    <li>5列目: R</li>
+                    <li>6列目: R R</li>
+                    <li>7列目: R長押し</li>
+                </ul>
+            </p>
+            <div class="vh">
+                縦置き
+            </div>
+            <img src="Images/Iver.png" alt="I vertical" class="MinoSize_Iver">
+            <p>
+                <ul class="pad">
+                    <!-- B = 左回転, A = 右回転 -->
+                    <li>1列目: 左回転 → L長押し</li>
+                    <li>2列目: L長押し → 左回転</li>
+                    <li>3列目: L L → 左回転</li>
+                    <li>4列目: L → 左回転</li>
+                    <li>5列目: 左回転</li>
+                    <li>6列目: 右回転</li>
+                    <li>7列目: R → 右回転</li>
+                    <li>8列目: R R → 右回転</li>
+                    <li>9列目: R長押し → 右回転</li>
+                    <li>10列目: 右回転 → R長押し</li>
+                </ul>
+            </p>
+        </article>
+
+<!-- ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ ここからfooter ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ -->
+        <footer class="site-footer">
+            <small><a href="https://tannsokumegane.com/tetris-yoko-idonitsuite/">参考元: 短足と眼鏡のゲーム雑記</a></small>
+        </footer>
+    </body>
+</html>
